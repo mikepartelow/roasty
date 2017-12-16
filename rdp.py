@@ -86,40 +86,9 @@ while True:
     rdp.send_value(value)
     time.sleep(1)
 
-
-# dg = rdp.datagram([dict(RPEventType=1),])
-
-
-# import socket
-# import struct
-
-# MCAST_GRP = '224.0.0.1'
-# MCAST_PORT = 5050
-# sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
-# sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 32)
-# sock.sendto(dg, (MCAST_GRP, MCAST_PORT))
-
-# import binascii
-
-# sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
-# try:
-#     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-# except AttributeError:
-#     pass
-# sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 32)
-# sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_LOOP, 1)
-
-# sock.bind((MCAST_GRP, MCAST_PORT))
-# host = socket.gethostbyname(socket.gethostname())
-# sock.setsockopt(socket.SOL_IP, socket.IP_MULTICAST_IF, socket.inet_aton(host))
-# sock.setsockopt(socket.SOL_IP, socket.IP_ADD_MEMBERSHIP,
-#                    socket.inet_aton(MCAST_GRP) + socket.inet_aton(host))
-
-# while 1:
-#     print("loop")
-#     try:
-#       data, addr = sock.recvfrom(1024)
-#     except socket.error, e:
-#       print 'Expection'
-#       hexdata = binascii.hexlify(data)
-#       print 'Data = %s' % hexdata
+# TODO:
+#  - figure out where exactly RPChannel goes
+#  - figure out how to use RPMetaType
+#  - better epochs
+#  - error recovery (keep on sending no matter what)
+#  - figure out minimum send frequency, don't drop below or RoastMaster barfs
