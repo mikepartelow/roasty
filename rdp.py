@@ -102,36 +102,37 @@ class RDP:
 
         return json.dumps(d)
 
-logging.basicConfig(level=logging.INFO)
-logging.info("hello")
-rdp = RDP()
-rdp.handshake()
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
+    logging.info("hello")
+    rdp = RDP()
+    rdp.handshake()
 
-time.sleep(1)
-
-while True:
-    rdp.send_values(bean_temp=123.0, env_temp=153.0, heater=90.0, fan=4.0)
-    time.sleep(1)
-    rdp.send_values(bean_temp=125.0, env_temp=153.0, heater=90.0, fan=0.0)
-    time.sleep(1)
-    rdp.send_values(bean_temp=127.0, env_temp=155.0, heater=80.0, fan=0.0)
-    time.sleep(1)
-    rdp.send_values(bean_temp=129.0, env_temp=157.0, heater=80.0, fan=0.0)
-    time.sleep(1)
-    rdp.send_values(bean_temp=131.0, env_temp=159.0, heater=80.0, fan=0.0)
-    time.sleep(1)
-    rdp.send_values(bean_temp=133.0, env_temp=161.0, heater=70.0, fan=0.0)
-    time.sleep(1)
-    rdp.send_values(bean_temp=138.0, env_temp=166.0, heater=70.0, fan=3.0)
-    time.sleep(1)
-    rdp.send_values(bean_temp=141.0, env_temp=171.0, heater=70.0, fan=3.0)
-    time.sleep(1)
-    rdp.send_values(bean_temp=150.0, env_temp=174.0, heater=60.0, fan=3.0)
-    time.sleep(1)
-    rdp.send_values(bean_temp=151.0, env_temp=177.0, heater=60.0, fan=4.0)
     time.sleep(1)
 
-# TODO:
-#  - better epochs
-#  - error recovery (keep on sending no matter what) (maybe do this in combined hottop/roastmaster code)
-#  - figure out minimum send frequency, don't drop below or RoastMaster barfs
+    while True:
+        rdp.send_values(bean_temp=123.0, env_temp=153.0, heater=90.0, fan=4.0)
+        time.sleep(1)
+        rdp.send_values(bean_temp=125.0, env_temp=153.0, heater=90.0, fan=0.0)
+        time.sleep(1)
+        rdp.send_values(bean_temp=127.0, env_temp=155.0, heater=80.0, fan=0.0)
+        time.sleep(1)
+        rdp.send_values(bean_temp=129.0, env_temp=157.0, heater=80.0, fan=0.0)
+        time.sleep(1)
+        rdp.send_values(bean_temp=131.0, env_temp=159.0, heater=80.0, fan=0.0)
+        time.sleep(1)
+        rdp.send_values(bean_temp=133.0, env_temp=161.0, heater=70.0, fan=0.0)
+        time.sleep(1)
+        rdp.send_values(bean_temp=138.0, env_temp=166.0, heater=70.0, fan=3.0)
+        time.sleep(1)
+        rdp.send_values(bean_temp=141.0, env_temp=171.0, heater=70.0, fan=3.0)
+        time.sleep(1)
+        rdp.send_values(bean_temp=150.0, env_temp=174.0, heater=60.0, fan=3.0)
+        time.sleep(1)
+        rdp.send_values(bean_temp=151.0, env_temp=177.0, heater=60.0, fan=4.0)
+        time.sleep(1)
+
+    # TODO:
+    #  - better epochs
+    #  - error recovery (keep on sending no matter what) (maybe do this in combined hottop/roastmaster code)
+    #  - figure out minimum send frequency, don't drop below or RoastMaster barfs
