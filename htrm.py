@@ -18,7 +18,7 @@ if __name__ == "__main__":
 
     rdp = rdp.RDP()
     reporter = Reporter(rdp)
-    hottop = hottop.Hottop():
+    hottop = hottop.Hottop()
 
     rdp.handshake()
     hottop.monitor(reporter)
