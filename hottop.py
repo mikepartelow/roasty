@@ -22,7 +22,7 @@ class Hottop:
         # except Exception:
             # pass
 
-    def closeport(p):
+    def closeport(self):
         # try:
             if self._port is not None and self._port.isOpen():
                 self._port.close()

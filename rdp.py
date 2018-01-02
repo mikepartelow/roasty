@@ -72,16 +72,16 @@ class RDP:
                                     dict(RPChannel=self.CHANNEL_ENV_TEMP,
                                          RPEventType=self.EVENT_TYPE_TEMPERATURE,
                                          RPMetaType=self.RP_META_ENV_TEMP,
-                                         RPValue=env_temp),])
-                                    # dict(RPChannel=self.CHANNEL_HEATER_CONTROL,
-                                    #      RPEventType=self.EVENT_TYPE_CONTROL,
-                                    #      RPMetaType=self.RP_META_ELECTRIC_LEVEL,
-                                    #      RPValue=heater),
-                                    # dict(RPChannel=self.CHANNEL_FAN_CONTROL,
-                                    #      RPEventType=self.EVENT_TYPE_CONTROL,
-                                    #      RPMetaType=self.RP_META_FAN_SPEED,
-                                    #      RPValue=fan),
-                                    # ])
+                                         RPValue=env_temp),
+                                    dict(RPChannel=self.CHANNEL_HEATER_CONTROL,
+                                         RPEventType=self.EVENT_TYPE_CONTROL,
+                                         RPMetaType=self.RP_META_ELECTRIC_LEVEL,
+                                         RPValue=heater),
+                                    dict(RPChannel=self.CHANNEL_FAN_CONTROL,
+                                         RPEventType=self.EVENT_TYPE_CONTROL,
+                                         RPMetaType=self.RP_META_FAN_SPEED,
+                                         RPValue=fan),
+                                    ])
 
         self.sendudp(dg)
 
