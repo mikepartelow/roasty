@@ -2,3 +2,5 @@
 venv
 humanlog.*
 binlog.*
+.DS_Store
+My Database.sqlite
