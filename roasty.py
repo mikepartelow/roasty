@@ -27,10 +27,20 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG, filename=logfilename)
 
     rdp = rdp.RDP()
+
+    addresses = None
+    sss       = config.get('scan subnet start')
+    sse       = config.get('scan subnet end')
+
+    if sss and sse:
+        sss_a, sss_b = sss.rsplit('.', 1)
+        sse_a, sse_b = sse.rsplit('.', 1)
+        addresses    = []
+
+        for i in xrange(int(sss_b), min(255, int(sse_b))):
+            addresses.append("{}.{}".format(sss_a, i))
     
-    rdp.handshake(addresses=["192.168.2.178","192.168.2.179",])
-    
-    rdp.handshake()
+    rdp.handshake(addresses=addresses)
 
     reporter = Reporter(rdp)
     hottop   = hottop.Hottop(device=device)
