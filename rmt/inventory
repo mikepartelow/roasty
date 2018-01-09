@@ -1,0 +1,9 @@
+#!/usr/bin/env python
+
+from db import init_db, Bean
+
+path_to_db = './My Database.sqlite'
+db = init_db(path_to_db)
+
+for bean in Bean.select().where(Bean.inventory > 0).order_by(Bean.inventory.desc()):
+    print(u"{} : {}g".format(bean.name, int(bean.inventory)))

@@ -17,16 +17,9 @@ class Country(BaseModel):
     class Meta:
         db_table = 'zcountry'
 
-class Market(BaseModel):
-    name    = CharField(db_column='zname')
-
-    class Meta:
-        db_table = 'zmarket'
-
-
 class Bean(BaseModel):
     country     = ForeignKeyField(Country, db_column='zcountry')
-    market      = ForeignKeyField(Market, db_column='zmarket')
+    marketname  = CharField(db_column='zmarketname')
     estate      = CharField(db_column='zestate')
     variety     = CharField(db_column='zvariety')
     inventory   = DecimalField(db_column='zinventory')
@@ -36,13 +29,8 @@ class Bean(BaseModel):
 
     @property
     def name(self):
-        try:
-            market = self.market.name
-        except Market.DoesNotExist:
-            market = ''
-
         name = u"{} {} {} {}".format(self.country.name,
-                                     market,
+                                     self.marketname if self.marketname else '',
                                      self.estate if self.estate else '',
                                      self.variety if self.variety else '')
 
