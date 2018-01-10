@@ -1,0 +1,26 @@
+#!/usr/bin/env python
+
+import sys
+from db import init_db, Roast
+
+path_to_db = './My Database.sqlite'
+
+db = init_db(path_to_db)
+
+if len(sys.argv) < 2:
+    print("{} <roast id>".format(sys.argv[0]))
+    sys.exit(1)
+
+roast_id = sys.argv[1]
+roast = Roast.get(Roast.id == roast_id)
+
+print("\n".join(map(lambda b: b.name, roast.beans)))
+print("-" * 42 + "\n")
+print("First Crack    : {}".format(roast.first_crack_as_time))
+if roast.first_crack_end is not None:
+    print("First Crack End: {}".format(roast.first_crack_end_as_time))
+print("Duration       : {}".format(roast.duration_as_time))
+print("\n")
+if roast.rating is not None and roast.rating > 0:
+    print("Rating         : {}".format(roast.rating))
+    print("\n")

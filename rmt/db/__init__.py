@@ -5,6 +5,9 @@ def init_db(path_to_db):
     _db.initialize(SqliteDatabase(path_to_db))
     return _db
 
+def as_time(seconds):
+    return "{}:{:02d}".format(seconds/60, seconds%60)
+
 class BaseModel(Model):
     id      = PrimaryKeyField(db_column='z_pk')
 
@@ -37,7 +40,23 @@ class Bean(BaseModel):
         return ' '.join(name.split())
 
 class Roast(BaseModel):
-    timestamp   = TimestampField(db_column='zdate')
+    timestamp           = TimestampField(db_column='zdate')
+    duration            = IntegerField(db_column='zduration')
+    first_crack         = IntegerField(db_column='zfirstcrack')
+    first_crack_end     = IntegerField(db_column='zfirstcrackend')
+    rating              = IntegerField(db_column='zrating')
+
+    @property
+    def duration_as_time(self):
+        return as_time(self.duration)
+
+    @property
+    def first_crack_as_time(self):
+        return as_time(self.first_crack)
+
+    @property
+    def first_crack_end_as_time(self):
+        return as_time(self.first_crack_end)
 
     @property
     def items(self):

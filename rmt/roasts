@@ -9,4 +9,4 @@ db = init_db(path_to_db)
 for roast in Roast.select().order_by(Roast.timestamp.desc()):
     name = u", ".join(map(lambda b: b.name, roast.beans))
 
-    print(u"{} : {}".format(roast.timestamp, name))
+    print(u"{} : {} : {}".format(roast.timestamp, name, roast.id))
