@@ -41,27 +41,53 @@ class RDP:
         mreq = struct.pack('4sL', group, socket.INADDR_ANY)
         self.sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
 
-    def sendudp(self, payload, address=None):
+    def sendudp(self, payload, address_or_addresses=None):
         if not isinstance(payload, str):
             raise ArgumentError("payload should be a str")
 
-        if address is None:
-            address = self._peer
+        if address_or_addresses is None:
+            address_or_addresses = [ self._peer, ]
+        elif not isinstance(address_or_addresses, list):
+            address_or_addresses = [ address_or_addresses, ]
 
-        self.sock.sendto(payload, (address, self.MULTICAST_PORT))
-        self.logger.info("sent to %s: %s", address[0], payload)
+        for address in address_or_addresses:
+            self.sock.sendto(payload, (address, self.MULTICAST_PORT))
+            self.logger.info("sent to %s: %s", address, payload)
 
-    def handshake(self):
+    def handshake(self, addresses=None):
         dg = self.datagram(payload=[dict(RPChannel=1, RPEventType=1),])
-        self.sendudp(dg, address=self.MULTICAST_GROUP)
+        if addresses is None:
+            send_address = self.MULTICAST_GROUP
+        else:
+            send_address = addresses
 
+        send_syn = True
         while True:
-            data, address = self.sock.recvfrom(1024)
-            if address[0] != socket.gethostbyname(socket.gethostname()):
-                self.logger.debug("ack from %s: %s", address, data)
-                self._peer = address[0]
-                self.logger.info("found Roastmaster at %s", self._peer)
-                break
+            if send_syn:
+                self.sendudp(dg, address_or_addresses=send_address)
+
+            self.sock.settimeout(32)
+            try:
+                data, address = self.sock.recvfrom(1024)
+                self.logger.debug("data from %s: %s", address, data)
+            except socket.timeout:
+                send_syn = True
+                continue
+            finally:
+                self.sock.settimeout(None)
+
+            try:
+                if json.loads(data)['RPPayload'][0]['RPEventType'] == 2:
+                    self.logger.info("ack from %s: %s", address, data)
+                    self._peer = address[0]
+                    self.logger.info("found Roastmaster at %s", self._peer)
+                    break
+                else:
+                    self.logger.info("ignoring %s from %s", data, address)
+                    send_syn = False
+            except (KeyError, ValueError, IndexError):
+                self.logger.info("ignoring %s from %s", data, address)
+                send_syn = False
 
     def send_values(self, bean_temp, env_temp, heater, fan):
         dg = self.datagram(payload=[

@@ -1,0 +1,6 @@
+{
+  "logfilename" : "/tmp/roasty.log",
+  "Xscan subnet start" : "192.168.2.100",
+  "Xscan subnet end" : "192.168.2.255",
+  "hottop device" : "/dev/serial/by-id/usb-FTDI_FT230X_Basic_UART_DA01P4X7-if00-port0"
+}
