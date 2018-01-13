@@ -1,0 +1,14 @@
+[Unit]
+Description=Roasty service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=pi
+WorkingDirectory=/home/pi/code/roasty
+ExecStart=/home/pi/code/roasty/venv/bin/python roasty.py
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
